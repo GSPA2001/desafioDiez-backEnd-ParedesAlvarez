@@ -45,9 +45,9 @@ Instalación:
 - **Página de cookies:** http://localhost:8080/cookies
 - **Página de chat:** http://localhost:8080/chat
 - * Para ver products, profile, users hay que hacer login
-- **Página products:**http://localhost:8080/products
-- **Página login:**http://localhost:8080/profile
-- **Página users:**http://localhost:8080/users
+- **Página products:** http://localhost:8080/products
+- **Página login:** http://localhost:8080/profile
+- **Página users:** http://localhost:8080/users
 (Para entrar como ADMIN, luego de registrase salir y hacer login, solo asi podra ver users)
 
 ## Used by

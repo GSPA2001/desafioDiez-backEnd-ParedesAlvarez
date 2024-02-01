@@ -13,6 +13,7 @@ import MongoStore from "connect-mongo";
 import passport from "passport";
 
 import { __dirname } from "./utils.js";
+import { getMockingProducts } from "./mockingProducts.js";
 import viewsRouter from "./routes/views.routes.js";
 import productsRouter from "./routes/products.routes.js";
 import usersRouter from "./routes/users.routes.js";
@@ -72,6 +73,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/cookies", cookiesRouter);
 app.use("/api/sessions", sessionsRouter);
+app.get("/mockingproducts", getMockingProducts);
 
 // Configuración de Mongoose
 mongoose.set("strictQuery", false);
@@ -193,3 +195,23 @@ app.all('*', (req, res, next) => {
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
+
+// Error handler
+app.use((err, req, res, next) => {
+  const code = err.code || 500;
+  let errorMessage = err.message || "Internal Server Error";
+
+  if (customErrorCodes.hasOwnProperty(err.code)) {
+    errorMessage = customErrorCodes[err.code];
+  }
+
+  res.status(code).json({ error: errorMessage });
+});
+
+const customErrorCodes = {
+  PRODUCT_NOT_FOUND: "Product not found",
+  INVALID_PRODUCT_ID: "Invalid product ID",
+  PRODUCT_ALREADY_EXISTS: "Product already exists",
+  INSUFFICIENT_STOCK: "Insufficient stock",
+  CART_NOT_FOUND: "Cart not found",
+};
