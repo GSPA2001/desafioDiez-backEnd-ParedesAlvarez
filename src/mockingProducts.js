@@ -14,5 +14,5 @@ const products = Array.from({ length: 100 }, (_, i) => ({
 }));
 
 export const getMockingProducts = (req, res) => {
-  res.status(200).json(products);
+  res.status(200).render("mockingProducts", { products });
 };
