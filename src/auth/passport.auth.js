@@ -49,7 +49,6 @@ const initPassport = () => {
     
             if (usuario && isValidPassword(usuario, pass)) {
                 // Autenticación exitosa
-                // Aca tuve que darle el rol al usuario en la DB porque no lograba darselo hardcodeado y me volvi loco intentando.
                 usuario.rol = 'ADMIN'
                 await usuario.save()
                 // Autenticación exitosa, llamamos a done con el usuario como segundo argumento
