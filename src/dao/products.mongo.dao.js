@@ -32,6 +32,15 @@ export class ProductService {
         }
     }
 
+    async getProductsPaginated(options) {
+        try {
+          return await productModel.paginate({}, options);
+        } catch (err) {
+          console.error("Error in getProductsPaginated:", err);
+          throw err;
+        }
+    }                
+
     async updateProduct(id, newContent) {
         try {
             const procedure = await productModel.findByIdAndUpdate(id, newContent)

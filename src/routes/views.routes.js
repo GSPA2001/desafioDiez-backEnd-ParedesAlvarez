@@ -24,14 +24,24 @@ router.get("/products", async (req, res) => {
   // Verificamos si hay un usuario logueado
   try {
     if (req.user) {
-      const products = await controller.getProducts();
-      const user = req.user;
+      const page = req.query.page || 1;
+      const limit = req.query.limit || 25;
+      const productsData = await controller.getProductsPaginated({ page, limit });
 
       res.render("products", {
-        title: "Lista de PRODUCTOS",
-        products: products,
-        userName: `Bienvenido: ${user.first_name}`,
-        userRol: `Rol: ${user.rol}`,
+        title: "Lista de Productos",
+        products: productsData.docs,
+        userName: `Welcome: ${req.user.first_name}`,
+        userRol: `Rol: ${req.user.rol}`,
+        pagination: {
+          totalPages: productsData.totalPages,
+          currentPage: productsData.page,
+          hasNextPage: productsData.hasNextPage,
+          hasPrevPage: productsData.hasPrevPage,
+          nextPage: productsData.nextPage,
+          prevPage: productsData.prevPage,
+          limit: limit,
+        },
       });
     } else {
       res.redirect("/login");

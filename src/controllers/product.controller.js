@@ -31,6 +31,21 @@ export class ProductController {
         }
     }
 
+    async getProductsPaginated(options) {
+        try {
+          const productsData = await service.getProductsPaginated(options);
+          const plainProducts = productsData.docs.map(doc => doc.toObject());
+      
+          return {
+            ...productsData,
+            docs: plainProducts,
+          };
+        } catch (err) {
+          console.error("Error in getProductsPaginated:", err);
+          throw err;
+        }
+    }           
+        
     async updateProduct(id, newContent) {
         try {
             return await service.updateProduct()
