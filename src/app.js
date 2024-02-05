@@ -24,6 +24,8 @@ import sessionsRouter from "./routes/sessions.routes.js";
 import messageModel from "./models/messages.model.js";
 import productModel from "./models/product.model.js";
 import MongoSingleton from "./dao/mongo.singleton.js";
+import CustomError from './dao/error.custom.class.js';
+import errorsDictionary from './dao/error.dictionary.js';
 
 const PORT = process.env.PORT || 5500;
 //MongoDB URL desde .env
@@ -189,7 +191,7 @@ app.use((err, req, res, next) => {
 
 // Ruta para manejar solicitudes no encontradas
 app.all('*', (req, res, next) => {
-  res.status(404).json({ error: 'Página no encontrada' });
+  res.status(404).json({ error: errorsDictionary.PAGE_NOT_FOUND.message });
 });
 
 process.on('unhandledRejection', (reason, promise) => {
@@ -199,19 +201,16 @@ process.on('unhandledRejection', (reason, promise) => {
 // Error handler
 app.use((err, req, res, next) => {
   const code = err.code || 500;
-  let errorMessage = err.message || "Internal Server Error";
+  let errorMessage = err.message || 'Internal Server Error';
 
-  if (customErrorCodes.hasOwnProperty(err.code)) {
-    errorMessage = customErrorCodes[err.code];
+  if (errorsDictionary.hasOwnProperty(err.code)) {
+    errorMessage = errorsDictionary[err.code].message;
+  }
+
+  // If the error is an instance of CustomError, use the custom error message
+  if (err instanceof CustomError) {
+    errorMessage = err.message;
   }
 
   res.status(code).json({ error: errorMessage });
 });
-
-const customErrorCodes = {
-  PRODUCT_NOT_FOUND: "Product not found",
-  INVALID_PRODUCT_ID: "Invalid product ID",
-  PRODUCT_ALREADY_EXISTS: "Product already exists",
-  INSUFFICIENT_STOCK: "Insufficient stock",
-  CART_NOT_FOUND: "Cart not found",
-};

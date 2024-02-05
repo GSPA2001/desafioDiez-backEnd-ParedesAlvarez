@@ -3,6 +3,7 @@ import { ProductController } from "../controllers/product.controller.js";
 import { UserController } from "../controllers/user.controller.js";
 import productModel from "../models/product.model.js";
 import messageModel from "../models/messages.model.js";
+import errorsDictionary from '../dao/error.dictionary.js';
 
 const router = Router();
 const controller = new ProductController();
@@ -15,7 +16,7 @@ router.get("/", async (req, res) => {
     res.render("index", { allProducts });
   } catch (err) {
     console.error("Error:", err);
-    res.status(500).json({ status: "error", error: err.message });
+    res.status(errorsDictionary.PRODUCT_MODEL_FIND_ERROR.code).json({ status: "error", error: errorsDictionary.PRODUCT_MODEL_FIND_ERROR.message });
   }
 });
 
