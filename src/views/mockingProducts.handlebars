@@ -7,6 +7,7 @@
     </figure>
     <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
+    <!-- version carrusel se ven los 100 productos slide automatico y manual-->
     {{#each products}}
       <div class="carousel-item {{#unless @index}}active{{/unless}}">
         <div class="container">
@@ -44,7 +45,7 @@
 </div>
   </div>
 </body>
-<!-- version clasica
+<!-- version clasica se ven los 100 productos
 <div class="container">
   <div class="row">
     {{#each products}}

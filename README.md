@@ -37,6 +37,7 @@ Instalación:
 * Al acceder a http://localhost:8080/api/products, se obtienen todos los productos.
 * Al acceder a http://localhost:8080/api/carts, se obtienen todos los carritos.
 * Al acceder a http://localhost:8080/api/users, se obtienen todos los usuarios registrados. Y para ver el uso de faker http://localhost:8080/api/users/mock/2
+* Al acceder a http://localhost:8080/mockingproducts, se obtienen los mockingproducts.
 
 ## Endpoints de handlebars:
 - **Página de index:** http://localhost:8080/
